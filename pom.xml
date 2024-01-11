@@ -19,6 +19,8 @@
         <module>memberService</module>
         <module>gateway</module>
         <module>productService</module>
+        <module>emailCertService</module>
+        <module>discovery</module>
     </modules>
     <properties>
         <java.version>11</java.version>

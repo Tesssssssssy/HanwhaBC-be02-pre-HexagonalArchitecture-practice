@@ -4,10 +4,10 @@ import com.example.hexagonalArchitecture.common.UseCase;
 import com.example.hexagonalarchitecture.member.adapter.out.persistence.MemberJpaEntity;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberCommand;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberUseCase;
+import com.example.hexagonalarchitecture.member.application.port.out.CreateEmailCertEventPort;
 import com.example.hexagonalarchitecture.member.application.port.out.RegisterMemberPort;
 import com.example.hexagonalarchitecture.member.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 //@Service
 @UseCase
@@ -16,6 +16,7 @@ public class RegisterMemberService implements RegisterMemberUseCase {
     // Use Case
 
     private final RegisterMemberPort registerMemberPort;
+    private final CreateEmailCertEventPort emailCertEventPort;
 
     @Override
     public Member registerMember(RegisterMemberCommand command) {
@@ -27,6 +28,8 @@ public class RegisterMemberService implements RegisterMemberUseCase {
                 .build();
 
         MemberJpaEntity memberJpaEntity = registerMemberPort.createMember(member);
+        emailCertEventPort.createEmailCertEvent(member);
+
 
         return Member.builder()
                 .id(memberJpaEntity.getId())

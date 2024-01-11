@@ -21,7 +21,7 @@ public class RegisterMemberController {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
-                .status(true)
+                .status(false)
                 .build();
 
         return registerMemberUseCase.registerMember(command);

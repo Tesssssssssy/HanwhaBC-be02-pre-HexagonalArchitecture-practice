@@ -7,4 +7,6 @@ public interface RegisterMemberPort {
     // 그림에서 Output port
 
     MemberJpaEntity createMember(Member member);
+
+
 }

@@ -1,17 +1,14 @@
-package com.example.hexagonalarchitecture;
+package com.example.hexagonalArchitecture.emailCert;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients
 @EnableDiscoveryClient
-public class MemberApplication {
+public class EmailCertApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MemberApplication.class, args);
+        SpringApplication.run(EmailCertApplication.class, args);
     }
-
 }

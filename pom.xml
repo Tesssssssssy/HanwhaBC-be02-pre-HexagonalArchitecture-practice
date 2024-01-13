@@ -21,6 +21,8 @@
         <module>productService</module>
         <module>emailCertService</module>
         <module>discovery</module>
+        <module>productImage</module>
+        <module>productReadAggregationService</module>
     </modules>
     <properties>
         <java.version>11</java.version>

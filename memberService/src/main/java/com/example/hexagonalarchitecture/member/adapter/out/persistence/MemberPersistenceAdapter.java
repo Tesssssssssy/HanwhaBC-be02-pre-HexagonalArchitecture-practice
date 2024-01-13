@@ -1,19 +1,18 @@
 package com.example.hexagonalarchitecture.member.adapter.out.persistence;
 
-import com.example.hexagonalArchitecture.common.PersistenceAdapter;
-import com.example.hexagonalarchitecture.member.application.port.in.ModifyMemberCommand;
+import com.example.hexagonalarchitecture.common.PersistenceAdapter;
+import com.example.hexagonalarchitecture.member.application.port.out.LoginCheckMemberPort;
 import com.example.hexagonalarchitecture.member.application.port.out.ModifyMemberPort;
 import com.example.hexagonalarchitecture.member.application.port.out.RegisterMemberPort;
 import com.example.hexagonalarchitecture.member.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 //@Component
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements RegisterMemberPort, ModifyMemberPort {
+public class MemberPersistenceAdapter implements RegisterMemberPort, ModifyMemberPort, LoginCheckMemberPort {
     // 출력 포트의 구현체
 
     private final SpringDataMemberRepository memberRepository;
@@ -45,4 +44,26 @@ public class MemberPersistenceAdapter implements RegisterMemberPort, ModifyMembe
         }
         return null;
     }
+
+    @Override
+    public MemberJpaEntity loginMember(Member member) {
+        Optional<MemberJpaEntity> result = memberRepository.findByEmail(member.getEmail());
+
+        if(result.isPresent()) {
+            MemberJpaEntity entity = result.get();
+            if (entity.getPassword().equals(member.getPassword())) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public MemberJpaEntity verifyMember(Member member) {
+        MemberJpaEntity memberJpaEntity = memberRepository.getById(member.getId());
+        memberJpaEntity.setStatus(member.getStatus());
+
+        return memberRepository.save(memberJpaEntity);
+    }
+
 }

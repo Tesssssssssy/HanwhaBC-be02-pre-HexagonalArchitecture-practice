@@ -1,28 +1,32 @@
 package com.example.hexagonalarchitecture.product.adapter.in.web;
 
-import com.example.hexagonalArchitecture.common.WebAdapter;
+import com.example.hexagonalarchitecture.common.WebAdapter;
+import com.example.hexagonalarchitecture.product.application.port.in.ProductInputPort;
 import com.example.hexagonalarchitecture.product.application.port.in.RegisterProductCommand;
-import com.example.hexagonalarchitecture.product.application.port.in.RegisterProductUseCase;
-import com.example.hexagonalarchitecture.product.domain.Product;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class RegisterProductController {
-    private final RegisterProductUseCase registerProductUseCase;
 
-    @PostMapping("/product/create")
-    Product createMember(@RequestBody RegisterProductRequest request) {
+    private final ProductInputPort productInputPort;
+
+    @RequestMapping(method = RequestMethod.POST, value = "/product/register")
+    public ResponseEntity register(
+            @RequestHeader(value = "X-Authorization-Id", required = true) Long id,
+            @RequestPart(value = "product") RegisterProductRequest request,
+            @RequestPart(value = "files") MultipartFile[] files) {
         RegisterProductCommand command = RegisterProductCommand.builder()
+                .brandId(id)
                 .name(request.getName())
-                .contents(request.getContents())
                 .price(request.getPrice())
+                .files(files)
                 .build();
-
-        return registerProductUseCase.createProduct(command);
+        return ResponseEntity.ok().body(productInputPort.registerProduct(command));
     }
 }
+

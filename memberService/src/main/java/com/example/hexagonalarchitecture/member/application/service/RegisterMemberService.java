@@ -1,6 +1,6 @@
 package com.example.hexagonalarchitecture.member.application.service;
 
-import com.example.hexagonalArchitecture.common.UseCase;
+import com.example.hexagonalarchitecture.common.UseCase;
 import com.example.hexagonalarchitecture.member.adapter.out.persistence.MemberJpaEntity;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberCommand;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberUseCase;

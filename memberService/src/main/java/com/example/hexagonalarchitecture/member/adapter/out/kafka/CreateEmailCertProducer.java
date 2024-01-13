@@ -1,6 +1,6 @@
 package com.example.hexagonalarchitecture.member.adapter.out.kafka;
 
-import com.example.hexagonalArchitecture.common.ExternalSystemAdapter;
+import com.example.hexagonalarchitecture.common.ExternalSystemAdapter;
 import com.example.hexagonalarchitecture.member.application.port.out.CreateEmailCertEventPort;
 import com.example.hexagonalarchitecture.member.domain.Member;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.hexagonalarchitecture.member.adapter.in.web;
 
-import com.example.hexagonalArchitecture.common.WebAdapter;
+import com.example.hexagonalarchitecture.common.WebAdapter;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberCommand;
 import com.example.hexagonalarchitecture.member.application.port.in.RegisterMemberUseCase;
 import com.example.hexagonalarchitecture.member.domain.Member;

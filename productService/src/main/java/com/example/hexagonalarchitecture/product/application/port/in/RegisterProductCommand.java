@@ -2,18 +2,20 @@ package com.example.hexagonalarchitecture.product.application.port.in;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
-
-@Data
 @Builder
+@Data
 public class RegisterProductCommand {
-    @NotNull
-    private String name;
+    private final Long brandId;
+    private final String name;
+    private final String price;
+    private final MultipartFile[] files;
 
-    @NotNull
-    private String contents;
-
-    @NotNull
-    private Integer price;
+    public RegisterProductCommand(Long brandId, String name, String price, MultipartFile[] files) {
+        this.brandId = brandId;
+        this.name = name;
+        this.price = price;
+        this.files = files;
+    }
 }

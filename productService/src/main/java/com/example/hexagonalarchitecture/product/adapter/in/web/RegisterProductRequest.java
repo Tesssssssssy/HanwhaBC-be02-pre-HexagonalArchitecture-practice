@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class RegisterProductRequest {
-    private String name;
-    private String contents;
-    private Integer price;
+    private final String name;
+    private final String price;
 }

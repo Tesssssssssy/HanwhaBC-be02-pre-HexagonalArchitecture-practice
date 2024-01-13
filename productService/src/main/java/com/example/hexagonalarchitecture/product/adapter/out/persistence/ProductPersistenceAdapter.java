@@ -1,40 +1,39 @@
 package com.example.hexagonalarchitecture.product.adapter.out.persistence;
 
-import com.example.hexagonalArchitecture.common.PersistenceAdapter;
-import com.example.hexagonalarchitecture.product.application.port.out.ModifyProductPort;
-import com.example.hexagonalarchitecture.product.application.port.out.RegisterProductPort;
+import com.example.hexagonalarchitecture.common.PersistenceAdapter;
+import com.example.hexagonalarchitecture.product.application.port.out.GetProductPort;
+import com.example.hexagonalarchitecture.product.application.port.out.ProductOutputPort;
 import com.example.hexagonalarchitecture.product.domain.Product;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.ObjectProvider;
 
 import java.util.Optional;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class ProductPersistenceAdapter implements RegisterProductPort, ModifyProductPort {
-    private final SpringDataProductRepository productRepository;
+public class ProductPersistenceAdapter implements ProductOutputPort, GetProductPort {
+    private final SpringDataProductRepository springDataProductRepository;
 
     @Override
-    public ProductJpaEntity createProduct(Product product) {
-        return productRepository.save(
-                ProductJpaEntity.builder()
-                        .name(product.getName())
-                        .contents(product.getContents())
-                        .price(product.getPrice())
-                        .build());
+    public Product createProduct(Product product) {
+        ProductEntity productEntity = ProductEntity.builder()
+                .brandId(product.getBrandId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .build();
+        productEntity = springDataProductRepository.save(productEntity);
+        return Product.builder()
+                .id(productEntity.getId())
+                .brandId(productEntity.getBrandId())
+                .name(productEntity.getName())
+                .price(productEntity.getPrice())
+                .build();
     }
 
     @Override
-    public ProductJpaEntity modifyProduct(Product product, Long id) {
-        Optional<ProductJpaEntity> result = productRepository.findById(id);
+    public ProductEntity getProduct(Long id) {
+        Optional<ProductEntity> result =springDataProductRepository.findById(id);
         if (result.isPresent()) {
-            ProductJpaEntity productJpaEntity = result.get();
-            productJpaEntity.setName(product.getName());
-            productJpaEntity.setContents(product.getContents());
-            productJpaEntity.setPrice(product.getPrice());
-
-            productJpaEntity = productRepository.save(productJpaEntity);
-            return productJpaEntity;
+            return  result.get();
         }
         return null;
     }

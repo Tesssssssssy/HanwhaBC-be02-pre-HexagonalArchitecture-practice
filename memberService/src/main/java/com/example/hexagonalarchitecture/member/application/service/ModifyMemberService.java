@@ -1,15 +1,12 @@
 package com.example.hexagonalarchitecture.member.application.service;
 
-import com.example.hexagonalArchitecture.common.UseCase;
+import com.example.hexagonalarchitecture.common.UseCase;
 import com.example.hexagonalarchitecture.member.adapter.out.persistence.MemberJpaEntity;
 import com.example.hexagonalarchitecture.member.application.port.in.ModifyMemberCommand;
 import com.example.hexagonalarchitecture.member.application.port.in.ModifyMemberUseCase;
 import com.example.hexagonalarchitecture.member.application.port.out.ModifyMemberPort;
 import com.example.hexagonalarchitecture.member.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.IllegalFormatCodePointException;
 
 //@Service
 @UseCase

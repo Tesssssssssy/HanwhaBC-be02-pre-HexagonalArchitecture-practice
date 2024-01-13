@@ -1,13 +1,15 @@
 package com.example.hexagonalarchitecture.product.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
 @Builder
+@Getter
+@AllArgsConstructor
 public class Product {
     private final Long id;
+    private final Long brandId;
     private final String name;
-    private final String contents;
-    private final Integer price;
+    private final String price;
 }

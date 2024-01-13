@@ -1,9 +1,11 @@
 package com.example.hexagonalarchitecture.member.application.service;
 
-import com.example.hexagonalArchitecture.common.UseCase;
+import com.example.hexagonalarchitecture.common.UseCase;
 import com.example.hexagonalarchitecture.member.application.port.in.VerifyEmailCertCommand;
 import com.example.hexagonalarchitecture.member.application.port.in.VerifyEmailCertUseCase;
+import com.example.hexagonalarchitecture.member.application.port.out.ModifyMemberPort;
 import com.example.hexagonalarchitecture.member.application.port.out.VerifyEmailCertPort;
+import com.example.hexagonalarchitecture.member.domain.Member;
 import com.example.hexagonalarchitecture.member.domain.VerifyEmailCert;
 import lombok.RequiredArgsConstructor;
 
@@ -11,16 +13,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VerifyEmailCertService implements VerifyEmailCertUseCase {
    private final VerifyEmailCertPort verifyEmailCertPort;
+    private final ModifyMemberPort modifyMemberPort;
 
     @Override
-    public Boolean verifyEmailCert(VerifyEmailCertCommand command) {
+    public VerifyEmailCert verifyEmailCert(VerifyEmailCertCommand command) {
         VerifyEmailCert verifyEmailCert = VerifyEmailCert.builder()
                 .email(command.getEmail())
                 .uuid(command.getUuid())
                 .build();
 
-        Boolean response = verifyEmailCertPort.verifyEmailCert(verifyEmailCert);
+        VerifyEmailCert response = verifyEmailCertPort.verifyEmailCert(verifyEmailCert);
 
-        return response;
+        if(response != null) {
+            modifyMemberPort.verifyMember(Member.builder()
+                    .id(response.getId())
+                    .status(true)
+                    .build());
+
+            return  verifyEmailCert;
+        }
+        return null;
     }
 }

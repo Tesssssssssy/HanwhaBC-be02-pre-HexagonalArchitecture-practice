@@ -6,4 +6,5 @@ import com.example.hexagonalarchitecture.member.domain.Member;
 
 public interface ModifyMemberPort {
     MemberJpaEntity modifyMember(Member member, Long id);
+    MemberJpaEntity verifyMember(Member member);
 }
